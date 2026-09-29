@@ -12,7 +12,7 @@
 
 | # | Nome completo | GitHub | E-mail FIAP |
 |---|---------------|--------|-------------|
-| 1 | Renato Cesar Martins Romão | — | RM377019@fiap.com.br |
+| 1 | Renato Cesar Martins Romão | (https://github.com/renato-cromao/qc-solo-aula01/tree/main) | RM377019@fiap.com.br |
 
 **RM:** 377019  
 **Grupo:** Solo
