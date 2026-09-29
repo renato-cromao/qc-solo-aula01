@@ -1,0 +1,48 @@
+digraph QC_MultiCloud {
+  graph [rankdir=LR, bgcolor="white", pad=0.3, nodesep=0.45, ranksep=0.7, fontname="Arial"];
+  node [shape=box, style="rounded,filled", fillcolor="white", fontname="Arial", fontsize=11];
+  edge [fontname="Arial", fontsize=9];
+
+  users [label="Clientes Web/Mobile\n12 países", shape=oval];
+  dns [label="Global DNS / Traffic Routing"];
+
+  subgraph cluster_azure {
+    label="Azure — experiência conversacional e dados de serving";
+    style="rounded,dashed";
+    front [label="Azure Front Door + WAF"];
+    app [label="Container Apps / AKS\nAPI e orquestração"];
+    ai [label="Azure OpenAI / AI Foundry\nAgentes e inferência"];
+    search [label="Azure AI Search\nRAG / vetores"];
+    pg [label="Azure PostgreSQL\nPedidos/perfis"];
+    obsaz [label="Azure Monitor + App Insights"];
+  }
+
+  subgraph cluster_aws {
+    label="AWS — catálogo, lake e processamento assíncrono";
+    style="rounded,dashed";
+    s3 [label="Amazon S3\nCatálogo/mídia/data lake"];
+    proc [label="ECS/Fargate + Lambda\nETL/enriquecimento"];
+    dyn [label="DynamoDB\nMetadados de alta escala"];
+    bus [label="SQS/SNS/EventBridge\nEventos assíncronos"];
+    obsaws [label="CloudWatch / X-Ray"];
+  }
+
+  ident [label="Identidade federada\nEntra ID ↔ AWS IAM/OIDC"];
+  otel [label="OpenTelemetry + SIEM\ncorrelation IDs"];
+
+  users -> dns;
+  dns -> front;
+  front -> app;
+  app -> ai;
+  app -> search;
+  app -> pg;
+  app -> bus [label="eventos, não chamadas síncronas"];
+  bus -> proc;
+  proc -> s3;
+  proc -> dyn;
+  s3 -> search [label="replicação incremental/batch"];
+  ident -> app [style=dashed];
+  ident -> proc [style=dashed];
+  obsaz -> otel [style=dashed];
+  obsaws -> otel [style=dashed];
+}

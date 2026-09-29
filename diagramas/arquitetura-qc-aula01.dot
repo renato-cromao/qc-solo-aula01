@@ -1,0 +1,34 @@
+digraph QC {
+  graph [rankdir=TB, splines=ortho, nodesep=0.55, ranksep=0.7, bgcolor="white", pad=0.3];
+  node [shape=box, style="rounded", fontname="Arial", fontsize=11, margin="0.15,0.10"];
+  edge [fontname="Arial", fontsize=9, arrowsize=0.7];
+
+  users [label="Clientes Web / Mobile\n12 países"];
+  edge_layer [label="Edge + Segurança\nAzure Front Door + WAF + CDN"];
+  frontend [label="Frontend\nStatic Web Apps / App Service"];
+  api [label="API & Orquestração\nAPI Management + Container Apps"];
+  agents [label="IA Conversacional / Agentes\nAzure OpenAI + AI Foundry"];
+  search [label="RAG / Busca Vetorial\nAzure AI Search"];
+  relational [label="Dados Transacionais\nAzure Database for PostgreSQL"];
+  nosql [label="Sessão / Perfil / Catálogo rápido\nCosmos DB"];
+  blob [label="Catálogo, imagens e documentos\nAzure Blob Storage / ADLS Gen2"];
+  bus [label="Eventos e Filas\nService Bus + Event Hubs"];
+  obs [label="Observabilidade\nAzure Monitor + App Insights + Log Analytics"];
+  security [label="Identidade & Segredos\nMicrosoft Entra ID + Managed Identity + Key Vault"];
+  iac [label="IaC / CI-CD\nTerraform + GitHub Actions / Azure DevOps"];
+
+  users -> edge_layer -> frontend -> api -> agents;
+  agents -> search;
+  search -> blob;
+  api -> relational;
+  api -> nosql;
+  api -> bus;
+  bus -> blob;
+  api -> obs [style=dashed];
+  agents -> obs [style=dashed];
+  security -> api [style=dashed];
+  security -> agents [style=dashed];
+  iac -> edge_layer [style=dashed];
+  iac -> api [style=dashed];
+  iac -> blob [style=dashed];
+}
