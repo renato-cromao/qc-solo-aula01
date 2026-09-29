@@ -1,0 +1,7 @@
+# Copie para terraform.tfvars somente se desejar.
+# Não versione segredos nem chaves privadas.
+location         = "eastus"
+prefix           = "aula01-iac"
+meu_ip           = "203.0.113.10"
+admin_username   = "azureuser"
+admin_public_key = "ssh-ed25519 AAAA... usuario@maquina"
